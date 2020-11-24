@@ -1,13 +1,15 @@
 // https://www.geeksforgeeks.org/check-if-concatenation-of-any-permutation-of-given-list-of-arrays-generates-the-given-array/
 
 
-    // Given an array arr[] of N distinct integers and a list of arrays pieces[] of distinct integers, the task is to check if the given list of arrays can be concatenated in any order to obtain the given array. If it is possible, then print “Yes”. Otherwise, print “No”.
+// Given an array arr[] of N distinct integers and a list of arrays pieces[] of distinct integers, 
+//the task is to check if the given list of arrays can be concatenated in any order to obtain the given array. 
+//If it is possible, then print “Yes”. Otherwise, print “No”.
 
 // t:O(N) s:O(k) k = p.length
 class GFG {
     
      public static void main(String[] args){
-        System.out.println("Hello World!");
+//        System.out.println("Hello World!");
         int[] t1= {1, 2, 4, 77,33,3};
         
          int[][] p1= {{1}, {4,77 ,33,3}, {2}};
