@@ -1,53 +1,40 @@
 // https://leetcode.com/discuss/interview-question/928723/Uber-or-OA-or-CodeSignal
-// Prefix String - given two string arrays A & B, find if all strings in B are prefixes of a concatenation of strings in A. 
-//For example if A = {"one", "two", "three"} B = {"onetwo", "one"}, return True
+// Prefix String - given two string arrays A & B, find if all strings in B are prefixes of a concatenation of strings in A. For example if A = {"one", "two", "three"} B = {"onetwo", "one"}, return True
 //assuming all lower case words
 public class Main {
     public static Boolean isPrefixStrings(String[] a,String[] b) {
     
-        var map = new HashSet[26];
+        var data = new HashMap<String, Boolean>();
         for(var w :a){
-            int ind= w.charAt(0) - 'a';
-            if(map[ind]==null)
-               map[ind] = new HashSet<String>();
-            map[ind].add(w);
+            data.put(w, true);
         }
-        
         for(var w :b){
-            int i = 0;
-                        // System.out.println("## "+ w );
-            while(i < w.length()){
-                int ind = w.charAt(i)-'a';
-                if(map[ind] == null)
-                    return false;
-                var set = (HashSet<String>)map[ind];
-                Boolean found = false;
-                for(String seg : set){
-                    var len = seg.length();
-                        // System.out.println("** "+ w + " "+seg+" "+ len
-                        //                    +" " + (w.length() - i ));
-                    if(seg.length()> w.length() - i ){
-                        len = w.length() - i ;
-                    }
-                    if(w.substring(i, i + len).equals(seg.substring(0, len ))){
-                        found = true;
-                        i += len;
-                        break;
-                    }
-                }
-                if(found ==false)
-                    return false;
-             // System.out.println(i + " " + w);
-            }
+            if(isPrefixStrings(w,a, data) == false)
+                return false;
         }
         return true;
+    }
+    public static Boolean isPrefixStrings(String w,String[] a
+                                          , HashMap<String, Boolean> data) {
+        if(data.containsKey(w) )
+                return data.get(w) ;
+        for(int i = 1; i<= w.length(); i++)
+            for(String word : a){
+                if(w.startsWith(word)
+                   && isPrefixStrings(w.substring(i), a , data)){
+                    data.put(w, true);
+                    return true;
+                }
+            }
+        data.put(w, false);
+        return false;
     }
     
     public static void main(String[] args) {
         // System.out.println("Hello World!");
         
         String[] a = {"one", "two", "three"};
-        String[] b = {"onetwo","onetw", "one"};
+        String[] b = {"onetwo","one", "one"};
         var r = isPrefixStrings(a,b);
         
         System.out.println(r);
