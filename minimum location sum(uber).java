@@ -24,102 +24,63 @@ public class Main {
         
         // location_nodes = 6
         // location_edges = 6
-        int[] from = {1,2,2,3,4,5,22,23,24,22,23,24, 24,24,22};
-        int[] to   = {2,4,5,5,5,6,23,24,22,24,22,23, 5,3,1};
+        int[] from = {1,1,2,2,3,4};
+        int[] to   = {2,3,3,4,4,5};
         var r =   getMinlocationSum(from,to);
-        
-        System.out.println(r);
-    }
-    
-    public static HashMap<Integer, HashSet<Integer>> getGraph(int[] from,int[] to) {    
-        var adj = new HashMap<Integer, HashSet<Integer>>();
-        for(int i = 0; i<to.length; i++ ){
-            if(adj.containsKey(from[i]) == false)
-                adj.put(from[i], new HashSet());
-            adj.get(from[i] ).add(to[i]);
-            
-            if(adj.containsKey(to[i]) == false)
-                adj.put(to[i], new HashSet());
-            adj.get(to[i] ).add(from[i]);
-        }
-        return adj;
-    }
-        
-    public static int getLocationSum(HashSet<Integer> trio
-                            , HashMap<Integer, HashSet<Integer>> g){
-        HashSet<Integer> related= new   HashSet<Integer> ();
-        
-        for(Integer i : trio){
-            related.addAll(g.get(i));
-        }
-         related.removeAll(trio);
-        return related.size();
-    }
-    
-    public static Boolean areConnected(HashSet<Integer> cur
-                                    , int id 
-                            , HashMap<Integer, HashSet<Integer>> g){
-    
-        for(int i : cur)
-        {
-            if(g.get(i).contains(id)==false)
-                return false;
-        }
-        return true;
-    }
-            
-            
-    public static void getTrios(int i
-                            , ArrayList<Integer> v    
-                            , HashMap<Integer, HashSet<Integer>> g
-                            , HashSet<Integer> cur
-                            , ArrayList<HashSet<Integer>> trios) {
-        
-        if(cur.size() == 3){
-            cur.toString();
-            trios.add(cur);
-            return;
-        }
-        if(i>=v.size()) return;
-        
-        //not add 
-        getTrios(i+1, v, g, new HashSet<Integer>(cur), trios);
+        System.out.println(r);        
         
         
-        //add
-        Integer id = v.get(i);
         
-//         if(cur.size()>0)
-//             System.out.println(cur.toString()+"   "+id+ " "+areConnected(cur,id,g));
-        if(cur.size()==0 || areConnected(cur,id,g)){
-            cur.add(id);
-            getTrios(i+1, v, g, cur, trios);
-        }
+        int[] f1 = {1,2,2,3,4,5};
+        int[] t1   = {2,4,5,5,5,6};
+        r =   getMinlocationSum(f1,t1);
+        System.out.println(r);        
+
+        
     }
     
     public static int getMinlocationSum(int[] from,int[] to) {
-        System.out.println("Hello World!");
-        var g= getGraph(from, to);  
-        System.out.println(g.size());
-        // for(var trio : )
-        var trios = new ArrayList<HashSet<Integer>>();
-        var f = new ArrayList<>(g.keySet());
-        // var f = (Integer[]) g.keySet().toArray();
-        // var f = (Integer[])Collection.toArray( g.keySet());
-     
-        getTrios(0,f ,g,new HashSet<Integer>(), trios) ;
-        
-        System.out.println(trios.size());
-        
-        var r = Integer.MAX_VALUE;
-        for(HashSet<Integer> trio : trios){
-            var lSum = getLocationSum(trio, g);
-            
-            System.out.println(trio.toString()+"   "+ lSum);
-            
-            r = Math.min(r,lSum);
+        // System.out.println("Hello World!$$$");
+        var graph = new HashMap<Integer,HashSet<Integer>>();    
+        var visited = new HashSet<HashSet>();
+        int min_location_sum = Integer.MAX_VALUE;
+        for (int i = 0; i< from.length; i++){
+            var v1_neibors =  graph.getOrDefault(from[i], new HashSet<Integer>());
+            var v2_neibors =  graph.getOrDefault(to[i], new HashSet<Integer>());
+            v1_neibors.add(to[i]);
+            v2_neibors.add( from[i]);
+            graph.put(from[i], v1_neibors);
+            graph.put(to[i], v2_neibors);
         }
-        return r;
+        for(Map.Entry<Integer, HashSet<Integer>> node: graph.entrySet() ) {
+            var neighbors = node.getValue();  // Find the neighbors of that node
+                // System.out.println(Arrays.toString(neighbors.toArray()));
+            for(Integer neighbor : neighbors){ 
+                var neighbor_neighbors = graph.get(neighbor); //
+                // System.out.println(Arrays.toString(neighbor_neighbors.toArray()));
+                var shared_neighbors = new HashSet<Integer>(neighbor_neighbors);
+                shared_neighbors.retainAll(neighbors); 
+                // System.out.println(Arrays.toString(neighbor_neighbors.toArray()));
+                for (Integer shared_neighbor : shared_neighbors){
+                    var trio = new HashSet(Arrays.asList(node, neighbor, shared_neighbor));
+                    if (visited.contains( trio)== false){
+                        visited.add(trio);
+                        var degree = neighbors.size() 
+                            + neighbor_neighbors.size() 
+                            + graph.get(shared_neighbor).size();
+                        var location_sum = degree - 6; //Degree minus 6!
+                        min_location_sum = Math.min(min_location_sum, location_sum);
+                    }
+                }
+            }
+        }
+        return min_location_sum;
     }
-}
+}                        
+
+
+
+
+
+
 
