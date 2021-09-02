@@ -10,9 +10,6 @@ def findRanges(arr: list, start: int, end: int):
         # print(start, arr[0], out)
     for i,v in enumerate(arr):
         # print(v)
-        # if v == reader:
-            
-        # else 
         if reader < v:
             if arr[i-1]+1 < v:
                 out+=" "+ str(arr[i-1]+1) 
