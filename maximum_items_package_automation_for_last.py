@@ -19,13 +19,7 @@ def maximum_items_package_automation_for_last(groups: list)-> int:
     min_val = 1 # min(groups) - 1st codition
     l = len(groups)
 
-    #     range = max_val - min_val + 1
-
-    if max_val > min_val+l-1:
-        return max(max_val, min_val+l-1) 
-    else: 
-        return min(max_val, min_val+l-1)
-    return 0
+    return min(max_val, min_val+l-1)
     
     
 print(maximum_items_package_automation_for_last([3,6,4,3,2,2]))
@@ -33,3 +27,4 @@ print(maximum_items_package_automation_for_last([3,5,4,3,2,2]))
 print(maximum_items_package_automation_for_last([3,3,4,3,2,2]))
 print(maximum_items_package_automation_for_last([3,5,4,3,10,2]))
 print(maximum_items_package_automation_for_last([40,5,4,3,10,2]))
+print(maximum_items_package_automation_for_last([40,5,4,3,166666,2]))
