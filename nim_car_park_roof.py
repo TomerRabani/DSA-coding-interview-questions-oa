@@ -19,7 +19,7 @@ def min_roof_length(k:int, nums:list)->int:
     result= pow(2,32)
     
     nums.sort()
-    print(nums)
+#     print(nums)
     for i in range(0,len(nums)-k+1):
         size = nums[i+k-1] - nums[i] + 1
         result = min(result, size)
