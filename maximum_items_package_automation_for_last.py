@@ -21,10 +21,15 @@ def maximum_items_package_automation_for_last(groups: list)-> int:
 
     #     range = max_val - min_val + 1
 
-    return max(max_val, min_val+l-1) if max_val > min_val+l-1 else min(max_val, min_val+l-1)
+    if max_val > min_val+l-1:
+        return max(max_val, min_val+l-1) 
+    else: 
+        return min(max_val, min_val+l-1)
+    return 0
     
     
-    
+print(maximum_items_package_automation_for_last([3,6,4,3,2,2]))
 print(maximum_items_package_automation_for_last([3,5,4,3,2,2]))
+print(maximum_items_package_automation_for_last([3,3,4,3,2,2]))
 print(maximum_items_package_automation_for_last([3,5,4,3,10,2]))
 print(maximum_items_package_automation_for_last([40,5,4,3,10,2]))
