@@ -1,3 +1,4 @@
+# https://leetcode.com/discuss/interview-question/1018060/amazon-oa-sde-2021-hackerrank-packaging-automation
 # Given a list of items in groups, perform certain operations in order to satisfy the constaints required by packaging automation.
 # The conditions are as follows:
 
