@@ -16,10 +16,10 @@
 
 def maximum_items_package_automation_for_last(groups: list)-> int:
     max_val = max(groups)
-    min_val = 1 # min(groups) - 1st codition
+    target_min_val = 1 # min(groups) - 1st codition 
     l = len(groups)
 
-    return min(max_val, min_val+l-1)
+    return min(max_val, target_min_val+l-1)
     
     
 print(maximum_items_package_automation_for_last([3,6,4,3,2,2]))
